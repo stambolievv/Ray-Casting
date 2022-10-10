@@ -1,0 +1,28 @@
+{
+  "name": "raycasting",
+  "version": "1.0.0",
+  "description": " A small RayCaster graphics engine in javascript with HTML5 canvas",
+  "main": "index.html",
+  "private": true,
+  "scripts": {},
+  "author": "Deyan 'stambolievv' Stamboliev",
+  "license": "Apache-2.0",
+  "keywords": [
+    "game",
+    "base",
+    "canvas",
+    "html5-canvas"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stambolievv/Ray-Casting.git"
+  },
+  "bugs": {
+    "url": "https://github.com/stambolievv/Ray-Casting/issues"
+  },
+  "devDependencies": {
+    "eslint": "^8.18.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsdoc": "^39.3.3"
+  }
+}
