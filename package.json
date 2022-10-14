@@ -1,15 +1,16 @@
 {
-  "name": "raycasting",
+  "name": "ray-casting",
   "version": "1.0.0",
-  "description": " A small RayCaster graphics engine in javascript with HTML5 canvas",
+  "description": "Visualization of Ray Casting and Line-Line Intersection",
   "main": "index.html",
   "private": true,
   "scripts": {},
   "author": "Deyan 'stambolievv' Stamboliev",
   "license": "Apache-2.0",
   "keywords": [
-    "game",
-    "base",
+    "javascript",
+    "ray-casting",
+    "line-line intersection",
     "canvas",
     "html5-canvas"
   ],
