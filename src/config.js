@@ -3,7 +3,7 @@ const config = {
     backgroundColor: '#111',
   },
   rays: {
-    amount: 360,
+    amount: 150,
     length: 1000,
     angle: [0, 360],
     color: 'rgba(245, 245, 45, 0.4)',
