@@ -71,7 +71,6 @@ export default class Vector2D {
    * @readonly
    * @public
    */
-
   get magnitude() {
     return Math.sqrt(this._x ** 2 + this._y ** 2);
   }

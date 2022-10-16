@@ -7,10 +7,10 @@ const config = {
     length: 1000,
     angle: [0, 360],
     color: 'rgba(245, 245, 45, 0.4)',
-    thickens: 1,
+    lineWidth: 1,
   },
   line: {
-    thickens: 3,
+    lineWidth: 3,
   }
 };
 

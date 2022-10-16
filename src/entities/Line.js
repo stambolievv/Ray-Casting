@@ -1,21 +1,19 @@
 import Vector2D from '../utils/Vector2D.js';
+import { randomHexColor } from '../utils/misc.js';
 
 export default class Line {
   constructor({
     position = { x: 0, y: 0 },
     length = 300,
     angle = 0,
-    color = 'yellow',
-    thickens = 1,
-    ...params
+    config = {},
   } = {}) {
     this.startPoint = new Vector2D({ x: position.x, y: position.y });
     this.endPoint = new Vector2D({ x: position.x, y: position.y + length }).rotate(this.startPoint, angle);
     this.length = this.startPoint.distance(this.endPoint);
     this.angle = angle;
-    this.color = color;
-    this.thickens = thickens;
-    this.params = params;
+    this.config = config;
+    this.color = this.config.color || randomHexColor();
   }
 
   /**
@@ -27,7 +25,7 @@ export default class Line {
     context.moveTo(...this.startPoint.toArray());
     context.lineTo(...this.endPoint.toArray());
     context.closePath();
-    context.lineWidth = this.thickens;
+    context.lineWidth = this.config.lineWidth;
     context.strokeStyle = this.color;
     context.stroke();
   }

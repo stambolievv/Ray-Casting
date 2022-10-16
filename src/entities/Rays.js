@@ -7,14 +7,24 @@ export default class Rays {
     amount = 360,
     length = 1000,
     angle = [0, 360],
-    color = 'yellow',
-    thickens = 1,
-    ...params
+    config = {},
   } = {}) {
+    this.config = config;
+
     /**@type {Array<Line>} */
-    this.lines = array(amount, i => (
-      new Line({ position, length, angle: clampBetweenRanges(i, [0, amount], angle), color, thickens, ...params })
-    ));
+    this.lines = array(amount, i => {
+      const configuration = {
+        position,
+        length,
+        angle: clampBetweenRanges(i, [0, amount], angle),
+        config: {
+          color: this.config.color,
+          lineWidth: this.config.lineWidth
+        }
+      };
+
+      return new Line(configuration);
+    });
   }
 
   /**
