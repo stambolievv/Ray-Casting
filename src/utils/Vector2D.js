@@ -660,16 +660,20 @@ export default class Vector2D {
   }
 
   /**
-   * @description The `copy` method returns a new vector with the same `x` and `y` values as the vector that the function is called on.
-   * @summary Does `NOT` modify the vector.
-   * @alias clone
-   * @returns {Vector2D} A new Vector2D object with the same x and y values as the original Vector2D object.
+   * @description The `copy` method takes a vector as an argument and copies the `x` and `y` values of that vector into the `x` and `y` values of the vector that the function is called on.
+   * @summary Does `modify` the vector.
+   * @param {Vector2D} vector - The vector to copy.
+   * @returns {this} The modified Vector2D that the function is called on.
    * @memberof Vector2D
    * @method copy
    * @public
    */
-  copy() {
-    return new Vector2D({ x: this._x, y: this._y });
+   copy(vector) {
+    this._handelError(arguments);
+
+    this._x = vector.x;
+    this._y = vector.y;
+    return this;
   }
 
   /**
