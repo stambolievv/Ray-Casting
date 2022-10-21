@@ -69,7 +69,8 @@ export default class Rays {
           }
         }
 
-        if (observer.closest) line.endPoint = observer.closest;
+        if (observer.closest) line.intersectionPoint = observer.closest;
+        else line.intersectionPoint = line.endPoint.clone();
       });
     });
   }

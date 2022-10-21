@@ -10,6 +10,7 @@ export default class Line {
   } = {}) {
     this.startPoint = new Vector2D({ x: position.x, y: position.y });
     this.endPoint = new Vector2D({ x: position.x, y: position.y + length }).rotate(this.startPoint, angle);
+    this.intersectionPoint = this.endPoint.clone();
     this.length = this.startPoint.distance(this.endPoint);
     this.angle = angle;
     this.config = config;
@@ -23,7 +24,7 @@ export default class Line {
   draw(context) {
     context.beginPath();
     context.moveTo(...this.startPoint.toArray());
-    context.lineTo(...this.endPoint.toArray());
+    context.lineTo(...this.intersectionPoint.toArray());
     context.closePath();
     context.lineWidth = this.config.lineWidth;
     context.strokeStyle = this.color;
