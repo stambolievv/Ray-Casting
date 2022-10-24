@@ -134,7 +134,7 @@ export function isString(value) {
  */
 
 export function isNumber(value) {
-  return typeof value === 'string' && isFinite(value) && !isNaN(value);
+  return typeof value === 'number' && isFinite(value) && !isNaN(value);
 }
 
 /**
