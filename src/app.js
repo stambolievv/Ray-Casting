@@ -24,7 +24,6 @@ const lines = array(getRandomInt(10, 15), () => {
     length: getRandomInt(100, 500),
     angle: getRandomInt(0, 360),
     config: config.line,
-    color: randomHexColor()
   };
 
   return new Line(configuration);

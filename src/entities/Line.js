@@ -5,7 +5,7 @@ export default class Line {
   constructor({ position = { x: 0, y: 0 }, length = 300, angle = 0, config = {} } = {}) {
     this.startPoint = new Vector2D({ x: position.x, y: position.y });
     this.endPoint = new Vector2D({ x: position.x, y: position.y + length }).rotate(this.startPoint, angle);
-    this.intersectionPoint = this.endPoint.clone();
+    this.intersectionPoint = this.endPoint.clone(); /* default */
     this.length = this.startPoint.distance(this.endPoint);
     this.angle = angle;
     this.config = config;
@@ -17,12 +17,17 @@ export default class Line {
    * @param {CanvasRenderingContext2D} context - The context of the canvas.
    */
   draw(context) {
+    const { gradient, color = this.color, lineWidth } = this.config;
+
+    const linearGradient = context.createLinearGradient(...this.startPoint.toArray(), ...this.endPoint.toArray());
+    gradient && Object.entries(gradient).forEach(([stop, color]) => linearGradient.addColorStop(stop, color));
+
     context.beginPath();
     context.moveTo(...this.startPoint.toArray());
     context.lineTo(...this.intersectionPoint.toArray());
     context.closePath();
-    context.lineWidth = this.config.lineWidth;
-    context.strokeStyle = this.color;
+    context.lineWidth = lineWidth;
+    context.strokeStyle = gradient ? linearGradient : color;
     context.stroke();
   }
 

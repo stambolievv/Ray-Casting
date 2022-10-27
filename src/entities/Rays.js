@@ -3,8 +3,6 @@ import { array, isArray, clampBetweenRanges } from '../utils/misc';
 
 export default class Rays {
   constructor({ position = { x: 0, y: 0 }, amount = 360, length = 1000, angle = [0, 360], config = {} } = {}) {
-    this.config = config;
-
     /**@type {Array<Line>} */
     this.lines = array(amount, i => {
       const configuration = {
@@ -12,8 +10,9 @@ export default class Rays {
         length,
         angle: clampBetweenRanges(i, [0, amount], angle),
         config: {
-          color: this.config.color,
-          lineWidth: this.config.lineWidth
+          gradient: config.gradient,
+          color: config.color,
+          lineWidth: config.lineWidth
         }
       };
 

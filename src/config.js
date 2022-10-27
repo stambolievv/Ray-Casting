@@ -3,14 +3,19 @@ const config = {
     backgroundColor: '#111'
   },
   rays: {
-    amount: 150,
-    length: 1000,
+    amount: 1000,
+    length: 500,
     angle: [0, 360],
-    color: 'rgba(245, 245, 45, 0.4)',
-    lineWidth: 1
+    gradient: {
+      0: 'white',
+      0.1: 'gray',
+      1: 'transparent'
+    },
+    lineWidth: 1,
   },
   line: {
-    lineWidth: 3
+    lineWidth: 3,
+    color: 'blue',
   }
 };
 
