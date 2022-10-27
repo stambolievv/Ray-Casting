@@ -31,6 +31,7 @@ dist
 dist-ssr
 build
 public
+chart.html
 *.zip
 *.local
 
