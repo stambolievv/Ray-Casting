@@ -36,7 +36,11 @@ public
 
 # Docmentation
 docs
+*.md
 
 # Misc
 *.todo
 todo.*
+**/.git
+**/.svn
+**/.hg
