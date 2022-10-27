@@ -1,14 +1,8 @@
-import Line from './Line.js';
-import { array, isArray, clampBetweenRanges } from '../utils/misc.js';
+import Line from './Line';
+import { array, isArray, clampBetweenRanges } from '../utils/misc';
 
 export default class Rays {
-  constructor({
-    position = { x: 0, y: 0 },
-    amount = 360,
-    length = 1000,
-    angle = [0, 360],
-    config = {},
-  } = {}) {
+  constructor({ position = { x: 0, y: 0 }, amount = 360, length = 1000, angle = [0, 360], config = {} } = {}) {
     this.config = config;
 
     /**@type {Array<Line>} */

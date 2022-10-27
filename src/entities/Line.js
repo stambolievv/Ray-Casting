@@ -1,13 +1,8 @@
-import Vector2D from '../utils/Vector2D.js';
-import { randomHexColor } from '../utils/misc.js';
+import Vector2D from '../utils/Vector2D';
+import { randomHexColor } from '../utils/misc';
 
 export default class Line {
-  constructor({
-    position = { x: 0, y: 0 },
-    length = 300,
-    angle = 0,
-    config = {},
-  } = {}) {
+  constructor({ position = { x: 0, y: 0 }, length = 300, angle = 0, config = {} } = {}) {
     this.startPoint = new Vector2D({ x: position.x, y: position.y });
     this.endPoint = new Vector2D({ x: position.x, y: position.y + length }).rotate(this.startPoint, angle);
     this.intersectionPoint = this.endPoint.clone();
@@ -45,7 +40,7 @@ export default class Line {
   /**
    * @description See if two line segments intersect. This uses the vector cross-product approach.
    * @param {Line} line - The line to check for intersection with.
-   * @returns {{type: string, point: Vector2D}} The intersection of two lines.
+   * @returns {{type: string, point?: Vector2D}} The intersection of two lines.
    * @see {@link https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection Line-line intersection} for further information.
    */
   intersection(line) {
@@ -70,7 +65,7 @@ export default class Line {
         ...x2.subtract(x1).toArray(),
         ...x2.subtract(y1).toArray(),
         ...y2.subtract(x1).toArray(),
-        ...y2.subtract(y1).toArray(),
+        ...y2.subtract(y1).toArray()
       ];
 
       if (!differences.every(point => point < 0)) return { type: 'colinear-disjoint' };
@@ -85,7 +80,7 @@ export default class Line {
     const t = x2.subtract(x1).crossProduct(y2.subtract(x2)) / denominator;
 
     /* Checking if the intersection point is within the bounds of the line segments. */
-    const fallsWithinLineSegment = (t >= 0) && (t <= 1) && (u >= 0) && (u <= 1);
+    const fallsWithinLineSegment = t >= 0 && t <= 1 && u >= 0 && u <= 1;
 
     if (fallsWithinLineSegment) return { type: 'intersection', point: new Vector2D(x1.add(y1.subtract(x1).multiplyScalar(t)).toObject()) };
     else return { type: 'no-intersection' };

@@ -92,7 +92,7 @@ export default class Vector2D {
    * @readonly
    */
   get directionD() {
-    return Math.atan2(this._y, this._x) * 180 / Math.PI;
+    return (Math.atan2(this._y, this._x) * 180) / Math.PI;
   }
 
   /**
@@ -112,7 +112,7 @@ export default class Vector2D {
    * @readonly
    */
   get angleD() {
-    return Math.atan2(this._y, this._x) * 180 / Math.PI;
+    return (Math.atan2(this._y, this._x) * 180) / Math.PI;
   }
 
   /**
@@ -152,7 +152,10 @@ export default class Vector2D {
    * @returns {Vector2D} A new Vector2D object with the sum of the x and y values of the two vectors.
    */
   add(vector) {
-    return new Vector2D({ x: this._x + vector.x, y: this._y + vector.y });
+    return new Vector2D({
+      x: this._x + vector.x,
+      y: this._y + vector.y
+    });
   }
 
   /**
@@ -174,7 +177,10 @@ export default class Vector2D {
    * @returns {Vector2D} A new Vector2D object with the difference between the two Vector2D objects.
    */
   subtract(vector) {
-    return new Vector2D({ x: this._x - vector.x, y: this._y - vector.y });
+    return new Vector2D({
+      x: this._x - vector.x,
+      y: this._y - vector.y
+    });
   }
 
   /**
@@ -196,7 +202,10 @@ export default class Vector2D {
    * @returns {Vector2D} A new Vector2D object with the product between the two Vector2D objects.
    */
   multiply(vector) {
-    return new Vector2D({ x: this._x * vector.x, y: this._y * vector.y });
+    return new Vector2D({
+      x: this._x * vector.x,
+      y: this._y * vector.y
+    });
   }
 
   /**
@@ -218,7 +227,10 @@ export default class Vector2D {
    * @returns {Vector2D} A new Vector2D object with the quotient between the two Vector2D objects.
    */
   divide(vector) {
-    return new Vector2D({ x: this._x / vector.x, y: this._y / vector.y });
+    return new Vector2D({
+      x: this._x / vector.x,
+      y: this._y / vector.y
+    });
   }
 
   /**
@@ -241,7 +253,10 @@ export default class Vector2D {
    * @returns {Vector2D} A new Vector2D object with the sum of the x and y values of the two vectors.
    */
   addScalar(scalar, scalar2) {
-    return new Vector2D({ x: this._x + scalar, y: this._y + (scalar2 ?? scalar) });
+    return new Vector2D({
+      x: this._x + scalar,
+      y: this._y + (scalar2 ?? scalar)
+    });
   }
 
   /**
@@ -253,7 +268,7 @@ export default class Vector2D {
    */
   addScalarSelf(scalar, scalar2) {
     this._x += scalar;
-    this._y += (scalar2 ?? scalar);
+    this._y += scalar2 ?? scalar;
     return this;
   }
 
@@ -265,7 +280,10 @@ export default class Vector2D {
    * @returns {Vector2D} A new Vector2D object with the difference between the two Vector2D objects.
    */
   subtractScalar(scalar, scalar2) {
-    return new Vector2D({ x: this._x - scalar, y: this._y - (scalar2 ?? scalar) });
+    return new Vector2D({
+      x: this._x - scalar,
+      y: this._y - (scalar2 ?? scalar)
+    });
   }
 
   /**
@@ -277,7 +295,7 @@ export default class Vector2D {
    */
   subtractScalarSelf(scalar, scalar2) {
     this._x -= scalar;
-    this._y -= (scalar2 ?? scalar);
+    this._y -= scalar2 ?? scalar;
     return this;
   }
 
@@ -289,7 +307,10 @@ export default class Vector2D {
    * @returns {Vector2D} A new Vector2D object with the x and y values multiplied by the scalar.
    */
   multiplyScalar(scalar, scalar2) {
-    return new Vector2D({ x: this._x * scalar, y: this._y * (scalar2 ?? scalar) });
+    return new Vector2D({
+      x: this._x * scalar,
+      y: this._y * (scalar2 ?? scalar)
+    });
   }
 
   /**
@@ -313,7 +334,10 @@ export default class Vector2D {
    * @returns {Vector2D} A new Vector2D object with the x and y values divided by the scalar.
    */
   divideScalar(scalar, scalar2) {
-    return new Vector2D({ x: this._x / scalar, y: this._y / (scalar2 ?? scalar) });
+    return new Vector2D({
+      x: this._x / scalar,
+      y: this._y / (scalar2 ?? scalar)
+    });
   }
 
   /**
@@ -383,8 +407,8 @@ export default class Vector2D {
     const cos = Math.cos(radians);
     const sin = Math.sin(radians);
 
-    const newX = (cos * (this._x - point.x)) + (sin * (this._y - point.y)) + point.x;
-    const newY = (cos * (this._y - point.y)) - (sin * (this._x - point.x)) + point.y;
+    const newX = cos * (this._x - point.x) + sin * (this._y - point.y) + point.x;
+    const newY = cos * (this._y - point.y) - sin * (this._x - point.x) + point.y;
 
     this._x = newX;
     this._y = newY;
@@ -489,7 +513,10 @@ export default class Vector2D {
    * @returns {Vector2D} A new Vector2D with the normalized x and y values.
    */
   normalize() {
-    return new Vector2D({ x: this._x / (Math.sqrt(this._x ** 2 + this._y ** 2)) || 1, y: this._y / (Math.sqrt(this._x ** 2 + this._y ** 2)) || 1 });
+    return new Vector2D({
+      x: this._x / Math.sqrt(this._x ** 2 + this._y ** 2) || 1,
+      y: this._y / Math.sqrt(this._x ** 2 + this._y ** 2) || 1
+    });
   }
 
   /**
@@ -510,7 +537,10 @@ export default class Vector2D {
    * @returns {Vector2D} A new Vector2D object with the same x and y values as the original Vector2D object.
    */
   clone() {
-    return new Vector2D({ x: this._x, y: this._y });
+    return new Vector2D({
+      x: this._x,
+      y: this._y
+    });
   }
 
   /**
