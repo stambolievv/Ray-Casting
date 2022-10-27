@@ -1,7 +1,7 @@
 {
   "name": "ray-casting",
   "version": "1.0.0",
-  "description": "Visualization of Ray Casting and Line-Line Intersection",
+  "description": "Visualization of Ray Casting and Line-Line Intersection.",
   "main": "index.html",
   "private": true,
   "type": "module",
