@@ -11,7 +11,9 @@
     "preview": "npm run build && vite preview",
     "format": "prettier --write ./src/**",
     "imageCompression": "imagemin dist/assets/public/images/ --out-dir=dist/assets/public/images/",
-    "jsonCompression": "minify-json dist/assets/public/json"
+    "jsonCompression": "minify-json dist/assets/public/json",
+    "gh-deploy": "npm run gh-predeploy && gh-pages  --dist=\"dist\" --branch=\"gh-pages\" --message=\"fix: deploy dist for github pages\"",
+    "gh-predeploy": "git rev-parse --verify --quiet gh-pages || (git branch gh-pages && git push --set-upstream origin gh-pages)"
   },
   "author": "Deyan 'stambolievv' Stamboliev",
   "license": "Apache-2.0",
@@ -33,6 +35,7 @@
     "eslint": "^8.18.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsdoc": "^39.3.3",
+    "gh-pages": "^4.0.0",
     "imagemin-cli": "^7.0.0",
     "minify-json": "^1.0.0",
     "prettier": "^2.7.1",
