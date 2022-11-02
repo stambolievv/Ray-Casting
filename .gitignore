@@ -27,7 +27,7 @@ lerna-debug.log*
 *.sw?
 
 # Distribution
-# dist // for github pages
+dist
 dist-ssr
 build
 public
