@@ -1,48 +1,52 @@
-import Rays from './entities/Rays';
-import Line from './entities/Line';
+import { Line, Rays } from './entities';
+import { Vector2D, createArray, getRandomInt } from './utilities/index.js';
 import config from './config.js';
-import { array, getRandomInt, randomHexColor } from './utils/misc';
 
-/** @type {HTMLCanvasElement} */
-const canvas = document.getElementById('canvas');
+const canvas = /** @type {HTMLCanvasElement} */(document.getElementById('canvas'));
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-/** @type {CanvasRenderingContext2D} */
-const ctx = canvas.getContext('2d');
-ctx.imageSmoothingEnabled = false;
+const context = canvas.getContext('2d');
+if (!context) throw new Error('Failed to get 2D context');
 
-const mouse = { x: 0, y: 0 };
-const rays = new Rays({ ...config.rays, config: config.rays });
-/**@type {Array<Line>} */
-const lines = array(getRandomInt(10, 15), () => {
-  const configuration = {
-    position: {
-      x: getRandomInt(0, canvas.width),
-      y: getRandomInt(0, canvas.height)
-    },
-    length: getRandomInt(100, 500),
-    angle: getRandomInt(0, 360),
-    config: config.line,
-  };
+const mouse = new Vector2D();
+const rays = new Rays({ config: config.rays });
+const lines = createLines(config.lines);
 
-  return new Line(configuration);
-});
+(function animate() {
+  context.fillStyle = config.scene.backgroundColor;
+  context.fillRect(0, 0, canvas.width, canvas.height);
 
-(function animate(timestamp) {
-  window.requestAnimationFrame(animate);
-  ctx.fillStyle = config.scene.backgroundColor;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  rays.draw(ctx);
+  rays.draw(context);
   rays.update(mouse);
-  rays.intersection(lines);
 
-  lines.forEach(line => line.draw(ctx));
-})(0);
+  for (const line of lines) line.draw(context);
+  rays.intersect(lines);
 
-window.addEventListener('pointermove', event => {
-  const screen = canvas.getBoundingClientRect();
-  mouse.x = ((event.clientX - screen.left) / (screen.right - screen.left)) * canvas.width;
-  mouse.y = ((event.clientY - screen.top) / (screen.bottom - screen.top)) * canvas.height;
+  requestAnimationFrame(animate);
+})();
+
+function createLines(config) {
+  const { amount, angle, length, singleLine } = config;
+
+  return createArray(getRandomInt(amount.min, amount.max), () => {
+    const configuration = {
+      position: { x: getRandomInt(0, canvas.width), y: getRandomInt(0, canvas.height) },
+      angle: getRandomInt(angle.min, angle.max),
+      config: {
+        length: getRandomInt(length.min, length.max),
+        ...singleLine,
+      },
+    };
+
+    return new Line(configuration);
+  });
+}
+
+window.addEventListener('pointermove', ({ clientX, clientY }) => {
+  const { top, right, bottom, left } = canvas.getBoundingClientRect();
+  mouse.set(
+    (clientX - left) / Math.max(right - left, 1) * canvas.width,
+    (clientY - top) / Math.max(bottom - top, 2) * canvas.height
+  );
 });
