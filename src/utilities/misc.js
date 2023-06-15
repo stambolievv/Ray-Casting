@@ -49,14 +49,24 @@ export function createArray(size, element) {
 /**
  * @description Randomly sample elements from an array.
  * @param {Array<T>} array - The array to sample from.
- * @param {number} [size] - The number of elements to sample. Default is 1.
- * @returns {T | Array<T>} The sampled elements as an array, or a single element if `size` is 1.
+ * @param {Size} [size] - The number of elements to sample.
+ * @returns {SampledElements<T, Size>} The sampled elements as an array, or a single element if `size` is not provided.
  * @template T - The type of the elements in the array.
+ * @template {number} [Size=never] - The number of elements to sample (optional).
  */
-export function sampleFromArray(array, size = 1) {
-  const shuffled = array.slice(0).sort(() => Math.random() - 0.5);
+export function sampleFromArray(array, size) {
+  const getRandomIndex = () => Math.floor(Math.random() * array.length);
 
-  return size === 1 ? shuffled[0] : shuffled.slice(0, size);
+  if (!size) return /**@type {SampledElements<T, Size>}*/ (array[getRandomIndex()]);
+
+  const sampledIndexes = new Set();
+  const maxSize = Math.min(size, array.length);
+
+  while (sampledIndexes.size < maxSize) {
+    sampledIndexes.add(getRandomIndex());
+  }
+
+  return /**@type {SampledElements<T, Size>}*/ ([...sampledIndexes].map(index => array[index]));
 }
 
 /**
@@ -190,6 +200,7 @@ export function degreesToRadians(degrees) {
  * @template {keyof HTMLElementTagNameMap} K - The tag type parameter representing the tag of the element.
  * @example
  * const button = createElement('button', {
+ *   parent: document.body,
  *   attributes: {
  *     id: 'myButton',
  *     class: 'btn btn-primary'
@@ -201,10 +212,10 @@ export function degreesToRadians(degrees) {
  *   },
  *   children: ['Click me!']
  * });
- *
- * document.body.appendChild(button);
  * @example
  * const div = createElement('div', {
+ *   parent: document.body,
+ *   prepend: true,
  *   attributes: {
  *     id: 'myDiv',
  *     class: 'container',
@@ -216,22 +227,18 @@ export function degreesToRadians(degrees) {
  *   },
  *   children: [
  *     'Hello, ',
- *     createElement('strong', { children: ['world'] }),
+ *     createElement('strong', { textContent: 'world' }),
  *     '!'
  *   ]
  * });
- *
- * document.body.appendChild(div);
  * @example
  * const customElement = createElement('my-custom-element', {
  *   customProp: 'custom value',
  *   onclick: () => console.log('Clicked!')
  * });
- *
- * document.body.appendChild(customElement);
  */
 export function createElement(tag, options = {}) {
-  const { parent, attributes, children, style, ...rest } = options;
+  const { parent, prepend = false, attributes, children, style, ...rest } = options;
 
   const element = document.createElement(tag);
 
@@ -249,7 +256,8 @@ export function createElement(tag, options = {}) {
 
   Object.assign(element, rest);
 
-  parent?.append(element);
+  if (!isNil(parent)) prepend ? parent.prepend(element) : parent.append(element);
+
   return element;
 }
 
@@ -317,8 +325,15 @@ export function isFunction(value) {
 }
 
 /**
+ * @typedef {([N] extends [never] ? T : T[])} SampledElements The sampled elements as an array, or a single element if `size` is not provided.
+ * @template T - The type of the elements in the array.
+ * @template {number} [N=never] - The number of elements to sample (optional).
+ */
+
+/**
  * @typedef {object} InternalCreationOptions Represents the internal creation options for an element. These options are specific to the internal implementation and usage of the `createElement` function. They provide properties for the parent element, attributes, children, and style of the new element. By separating these internal options, we can ensure that the core functionality of the `createElement` function remains intact and unaffected by external factors.
  * @property {Element} parent The parent to append the new element to.
+ * @property {boolean} prepend Should the parent be prepended instead of appended the new element to.
  * @property {Record<string, string>} attributes The attributes to set on the new element.
  * @property {Array<Element | string>} children The children to append to the new element.
  * @property {Partial<CSSStyleDeclaration>} style The style to apply to the new element.
